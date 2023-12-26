@@ -4,11 +4,16 @@ metadata:
   labels:
     app: prometheus
   name: prometheus
+  namespace: kubeflow
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   selector:
+    type: LoadBalancer
     app: prometheus
   ports:
   - name: promui
     protocol: TCP
     port: 9090
     targetPort: 9090
+
