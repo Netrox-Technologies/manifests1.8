@@ -16,13 +16,20 @@ spec:
       labels:
         app: grafana
     spec:
+      volumes:
+      - name: grafana-store
+        persistentVolumeClaim:
+          claimName: grafana-pv-claim
       containers:
       - name: grafana
-        image: grafana/grafana:5.3.4
+        image: grafana/grafana:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
           name: grafana
+        volumeMounts:
+        - name: grafana-store
+          mountPath: /var/lib/grafana
         env:
         - name: GF_SECURITY_ADMIN_USER
           value: admin
